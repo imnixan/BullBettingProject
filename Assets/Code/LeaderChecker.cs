@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LeaderChecker : MonoBehaviour
 {
@@ -8,7 +9,12 @@ public class LeaderChecker : MonoBehaviour
     public Color[] colors;
 
     [SerializeField]
-    private Image leaderColor;
+    private Image leaderColor,
+        betColor;
+
+    [SerializeField]
+    private TextMeshProUGUI bet,
+        prize;
 
     [SerializeField]
     private HorseRun[] runners;
@@ -16,6 +22,12 @@ public class LeaderChecker : MonoBehaviour
     private void Update()
     {
         CheckLeader();
+    }
+
+    private void Start()
+    {
+        bet.text = PlayerPrefs.GetInt("PlayerBet").ToString();
+        prize.text = PlayerPrefs.GetInt("PlayerPrize").ToString();
     }
 
     private void CheckLeader()
@@ -31,5 +43,6 @@ public class LeaderChecker : MonoBehaviour
             }
         }
         leaderColor.color = colors[runners[leaderIndex].horseNumber];
+        betColor.color = colors[PlayerPrefs.GetInt("PlayerBetHorse")];
     }
 }

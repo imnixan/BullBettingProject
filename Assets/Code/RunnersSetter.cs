@@ -12,6 +12,7 @@ public class RunnersSetter : MonoBehaviour
 
     private void Start()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         CrossSceneData crossSceneData = FindAnyObjectByType<CrossSceneData>();
         for (int i = 0; i < runners.Length; i++)
         {

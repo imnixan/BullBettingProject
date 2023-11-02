@@ -44,7 +44,7 @@ public class Pusher : MonoBehaviour
         StartCoroutine(PushChaser());
     }
 
-    public void HideButton()
+    private void HideButton()
     {
         GetComponentInChildren<Button>().interactable = false;
         rt.DOAnchorPosX(500, 0.4f).Play();
@@ -58,5 +58,15 @@ public class Pusher : MonoBehaviour
             currentRunner.color = leader.colors[currentRunnerIndex];
             yield return new WaitForSeconds(Random.Range(1, 4));
         }
+    }
+
+    private void OnEnable()
+    {
+        BgMoving.RaceFinished += HideButton;
+    }
+
+    private void OnDisable()
+    {
+        BgMoving.RaceFinished -= HideButton;
     }
 }

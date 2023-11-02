@@ -8,7 +8,7 @@ using UnityEngine.Assertions.Must;
 
 public class HorseRun : MonoBehaviour
 {
-    public static event UnityAction HorseFinished;
+    public static event UnityAction<int> HorseFinished;
     private Sprite[] animList;
 
     private Image image;
@@ -50,7 +50,7 @@ public class HorseRun : MonoBehaviour
         if (transform.position.x > finishLine.position.x && !finished)
         {
             Debug.Log("finished" + horseNumber);
-            HorseFinished?.Invoke();
+            HorseFinished?.Invoke(horseNumber);
             finished = true;
         }
     }
@@ -118,6 +118,7 @@ public class HorseRun : MonoBehaviour
 
     private void StopRun()
     {
+        fire.Stop();
         onFinishLine = true;
         runSpeed = 1.2f;
         race.Kill();

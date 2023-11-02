@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -134,7 +134,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: lighterns_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 55
+        width: 354
+        height: 644
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 344b5c8b2794f54409f7b8bce112b7db
+      internalID: -193638637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lighterns_1
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 18
+        width: 347
+        height: 762
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93699c9ea5625994d9914670d77da7ae
+      internalID: 1688524843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lighterns_3
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 1
+        width: 341
+        height: 726
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4dcb8f08f8105243884fbaf158f0f5e
+      internalID: 1692236183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +208,22 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      lighterns_0: -193638637
+      lighterns_1: 1688524843
+      lighterns_10: 1044832797
+      lighterns_11: 1119656015
+      lighterns_12: 613831142
+      lighterns_13: -990455687
+      lighterns_14: 1607231834
+      lighterns_2: -1639677032
+      lighterns_3: 1692236183
+      lighterns_4: -756000390
+      lighterns_5: 1575454795
+      lighterns_6: 355929962
+      lighterns_7: -1728501453
+      lighterns_8: -1531336507
+      lighterns_9: -771313626
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
