@@ -46,5 +46,19 @@ public class LobbyBg : MonoBehaviour
             {
                 SceneManager.LoadScene("Menu");
             });
+        seq.Restart();
+    }
+
+    public void StartGame()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(window.DOAnchorPosY(5000, 0.5f))
+            .Append(windowBot.DOAnchorPosY(-5000, 0.5f))
+            .Append(nightBg.DOColor(Color.white, 0.5f))
+            .AppendCallback(() =>
+            {
+                SceneManager.LoadScene("HorseRide");
+            });
+        seq.Restart();
     }
 }

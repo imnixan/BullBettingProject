@@ -18,16 +18,28 @@ public class HorseRandomiser : MonoBehaviour
     private Image[] horseColorsIcons;
 
     [SerializeField]
+    private TextMeshProUGUI oddsText,
+        betText,
+        balanceText;
+
+    [SerializeField]
     private Sprite choosed,
         unchoosed;
+
+    [SerializeField]
+    private LobbyBg bg;
 
     [SerializeField]
     private Color[] colors;
 
     private Dictionary<int, int> buttonChoose = new Dictionary<int, int>();
+    private int bet;
 
     [SerializeField]
     private Button[] buttons;
+    private int playerBalance;
+
+    private bool chosed;
 
     private void Awake()
     {
@@ -43,7 +55,11 @@ public class HorseRandomiser : MonoBehaviour
         {
             horseColorsIcons[i].color = colors[ridersForRace[i]];
             names[i].text = StaticData.horsesName[ridersForRace[i]];
+            names[i].color = colors[ridersForRace[i]];
         }
+        playerBalance = Mathf.Max(100, PlayerPrefs.GetInt("PlayerBalance", 3000));
+        balanceText.text = playerBalance.ToString();
+        bet = 100;
     }
 
     private void InitBetting(int[] horses)
@@ -56,9 +72,16 @@ public class HorseRandomiser : MonoBehaviour
 
     public void ChooseHorse(int id)
     {
-        PlayerPrefs.SetInt("PlayerBetHorse", buttonChoose[id]);
-        PlayerPrefs.Save();
-        RebuildButtons(id);
+        if (bet > 0)
+        {
+            chosed = true;
+            PlayerPrefs.SetInt("PlayerBetHorse", buttonChoose[id]);
+            PlayerPrefs.Save();
+            oddsText.text = StaticData.odds[buttonChoose[id]].ToString();
+            float odds = StaticData.odds[buttonChoose[id]];
+            PlayerPrefs.SetInt("PlayerPrize", Mathf.RoundToInt(odds * bet));
+            RebuildButtons(id);
+        }
     }
 
     private void RebuildButtons(int id)
@@ -73,6 +96,37 @@ public class HorseRandomiser : MonoBehaviour
             {
                 buttons[i].image.sprite = unchoosed;
             }
+        }
+    }
+
+    public void Upbet()
+    {
+        bet += 100;
+        if (bet > playerBalance)
+        {
+            bet = playerBalance;
+        }
+        betText.text = bet.ToString();
+    }
+
+    public void DownBet()
+    {
+        bet -= 100;
+        if (bet < 0)
+        {
+            bet = 0;
+        }
+        betText.text = bet.ToString();
+    }
+
+    public void StartGame()
+    {
+        if (bet > 0 && chosed)
+        {
+            PlayerPrefs.SetInt("PlayerBet", bet);
+            PlayerPrefs.SetInt("PlayerBalance", playerBalance - bet);
+            PlayerPrefs.Save();
+            bg.StartGame();
         }
     }
 }

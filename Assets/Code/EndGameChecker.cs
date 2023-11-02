@@ -73,8 +73,10 @@ public class EndGameChecker : MonoBehaviour
             winWindow.DOAnchorPosY(0, 1.5f).Play();
             prize.text = (PlayerPrefs.GetInt("PlayerPrize")).ToString();
             PlayerPrefs.SetInt(
-                "Balance",
-                PlayerPrefs.GetInt("Balance") + PlayerPrefs.GetInt("PlayerPrize")
+                "PlayerBalance",
+                PlayerPrefs.GetInt("PlayerBalance")
+                    + PlayerPrefs.GetInt("PlayerPrize")
+                    + PlayerPrefs.GetInt("PlayerBet")
             );
         }
         bar.DOAnchorPosY(1000, 0.5f).Play();
