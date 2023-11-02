@@ -7,6 +7,9 @@ public class RunnersSetter : MonoBehaviour
     [SerializeField]
     private HorseRun[] runners;
 
+    [SerializeField]
+    private Pusher pusher;
+
     private void Start()
     {
         CrossSceneData crossSceneData = FindAnyObjectByType<CrossSceneData>();
@@ -15,5 +18,6 @@ public class RunnersSetter : MonoBehaviour
             runners[i].Init(crossSceneData.runnersInRaceSprites[i], crossSceneData.runnersList[i]);
             runners[i].StartRace();
         }
+        pusher.StartRace();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LeaderChecker : MonoBehaviour
 {
     [SerializeField]
-    private Color[] colors;
+    public Color[] colors;
 
     [SerializeField]
     private Image leaderColor;
@@ -31,6 +31,5 @@ public class LeaderChecker : MonoBehaviour
             }
         }
         leaderColor.color = colors[runners[leaderIndex].horseNumber];
-        Debug.Log(leaderIndex);
     }
 }

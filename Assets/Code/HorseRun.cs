@@ -3,15 +3,21 @@ using UnityEngine;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using DG.Tweening;
+using UnityEngine.Events;
+using UnityEngine.Assertions.Must;
 
 public class HorseRun : MonoBehaviour
 {
+    public static event UnityAction HorseFinished;
     private Sprite[] animList;
 
     private Image image;
 
     [SerializeField]
     private int frame;
+
+    [SerializeField]
+    private Transform finishLine;
 
     [SerializeField]
     private float runSpeed = 1;
@@ -22,8 +28,11 @@ public class HorseRun : MonoBehaviour
     private RectTransform rt;
     public int horseNumber;
     private bool onMove;
+    private bool onFinishLine;
     private Sequence race,
         final;
+    private bool finished;
+    private ParticleSystem fire;
 
     public void Init(Sprite[] animList, int horseNumber)
     {
@@ -33,6 +42,17 @@ public class HorseRun : MonoBehaviour
         frame = Random.Range(0, animList.Length);
         image.sprite = animList[frame];
         this.horseNumber = horseNumber;
+        fire = GetComponentInChildren<ParticleSystem>();
+    }
+
+    private void Update()
+    {
+        if (transform.position.x > finishLine.position.x && !finished)
+        {
+            Debug.Log("finished" + horseNumber);
+            HorseFinished?.Invoke();
+            finished = true;
+        }
     }
 
     public void StartRace()
@@ -64,12 +84,8 @@ public class HorseRun : MonoBehaviour
             {
                 onMove = true;
                 race = DOTween.Sequence();
-                race.Append(
-                        rt.DOAnchorPosX(
-                            rt.anchoredPosition.x + Random.Range(-450, 451),
-                            Random.Range(2, 5)
-                        )
-                    )
+                float newPos = rt.anchoredPosition.x + Random.Range(-450, 451);
+                race.Append(rt.DOAnchorPosX(newPos, Random.Range(2, 5)))
                     .AppendCallback(() =>
                     {
                         onMove = false;
@@ -79,20 +95,30 @@ public class HorseRun : MonoBehaviour
         }
     }
 
-    public void Rush()
+    public void Rush(Color color)
     {
-        onMove = true;
-        race = DOTween.Sequence();
-        race.Append(rt.DOAnchorPosX(rt.anchoredPosition.x + 250, Random.Range(1, 4)))
-            .AppendCallback(() =>
-            {
-                onMove = false;
-            })
-            .Restart();
+        if (!onFinishLine)
+        {
+            onMove = true;
+            race.Kill();
+            var main = fire.main;
+            main.startColor = color;
+            fire.Play();
+            float newPos = rt.anchoredPosition.x + 250;
+            race = DOTween.Sequence();
+            race.Append(rt.DOAnchorPosX(newPos, Random.Range(1f, 3f)))
+                .AppendCallback(() =>
+                {
+                    onMove = false;
+                    fire.Stop();
+                })
+                .Restart();
+        }
     }
 
     private void StopRun()
     {
+        onFinishLine = true;
         runSpeed = 1.2f;
         race.Kill();
         onMove = true;
