@@ -11,6 +11,11 @@ public class HorseRandomiser : MonoBehaviour
 
     private void Awake()
     {
-        var riders = 
+        int[] riders = new int[] { 0, 1, 2, 3, 4, 5 };
+        riders.Shuffle();
+        int[] ridersForRace = new int[4];
+        Array.Copy(riders, ridersForRace, 4);
+
+        crossSceneData.Init(ridersForRace);
     }
 }

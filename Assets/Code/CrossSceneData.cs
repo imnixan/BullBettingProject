@@ -18,10 +18,11 @@ public class CrossSceneData : MonoBehaviour
         purpleRunnerSprites,
         seaRunnerSprites;
 
-    public CrossSceneData(int[] runnersIndexes)
+    public List<int> runnersList;
+
+    public void Init(int[] runnersIndexes)
     {
         SetRunners(runnersIndexes);
-        DontDestroyOnLoad(gameObject);
     }
 
     private void SetRunners(int[] runnersIndexes)
@@ -37,9 +38,11 @@ public class CrossSceneData : MonoBehaviour
         };
 
         runnersInRaceSprites = new List<Sprite[]>();
+        runnersList = new List<int>();
         for (int i = 0; i < runnersIndexes.Length; i++)
         {
             runnersInRaceSprites.Add(timeRunners[runnersIndexes[i]]);
+            runnersList.Add(runnersIndexes[i]);
         }
     }
 }
