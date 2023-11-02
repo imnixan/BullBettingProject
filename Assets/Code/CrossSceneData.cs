@@ -23,6 +23,7 @@ public class CrossSceneData : MonoBehaviour
     public void Init(int[] runnersIndexes)
     {
         SetRunners(runnersIndexes);
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void SetRunners(int[] runnersIndexes)
