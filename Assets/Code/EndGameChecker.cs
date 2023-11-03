@@ -26,6 +26,11 @@ public class EndGameChecker : MonoBehaviour
     private ParticleSystem explode;
     private RectTransform rt;
 
+    [SerializeField]
+    private AudioClip salute,
+        win,
+        fail;
+
     private bool finished;
 
     private void OnEnable()
@@ -43,6 +48,10 @@ public class EndGameChecker : MonoBehaviour
                 ParticleSystem ps = Instantiate(explode, finishLine.position, new Quaternion());
                 var main = ps.main;
                 main.startColor = Random.ColorHSV();
+                if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                {
+                    AudioSource.PlayClipAtPoint(salute, Vector2.zero);
+                }
             })
             .AppendInterval(0.3f)
             .AppendCallback(() =>
@@ -50,6 +59,10 @@ public class EndGameChecker : MonoBehaviour
                 ParticleSystem ps = Instantiate(explode, finishLine.position, new Quaternion());
                 var main = ps.main;
                 main.startColor = Random.ColorHSV();
+                if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                {
+                    AudioSource.PlayClipAtPoint(salute, Vector2.zero);
+                }
             })
             .AppendInterval(0.3f)
             .AppendCallback(() =>
@@ -57,6 +70,10 @@ public class EndGameChecker : MonoBehaviour
                 ParticleSystem ps = Instantiate(explode, finishLine.position, new Quaternion());
                 var main = ps.main;
                 main.startColor = Random.ColorHSV();
+                if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                {
+                    AudioSource.PlayClipAtPoint(salute, Vector2.zero);
+                }
             });
         seq.Restart();
 
@@ -78,6 +95,17 @@ public class EndGameChecker : MonoBehaviour
                     + PlayerPrefs.GetInt("PlayerPrize")
                     + PlayerPrefs.GetInt("PlayerBet")
             );
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(win, Vector2.zero);
+            }
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(fail, Vector2.zero);
+            }
         }
         bar.DOAnchorPosY(1000, 0.5f).Play();
     }

@@ -12,13 +12,13 @@ public static class StaticData
         { 4, "Veil" },
         { 5, "Aurora" }
     };
-    public static Dictionary<int, float> odds = new Dictionary<int, float>
+    public static Dictionary<int, int> odds = new Dictionary<int, int>
     {
-        { 0, 3f },
-        { 1, 2.0f },
-        { 2, 0.25f },
-        { 3, 12.0f },
-        { 4, 1.2f },
-        { 5, 1.0f }
+        { 0, 3 },
+        { 1, 2 },
+        { 2, 4 },
+        { 3, 5 },
+        { 4, 12 },
+        { 5, 36 }
     };
 }

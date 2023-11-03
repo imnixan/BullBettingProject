@@ -27,7 +27,7 @@ public class Pusher : MonoBehaviour
             runnersNums.Add(runner.horseNumber);
         }
         rt.DOAnchorPosX(-78, 0.4f).Play();
-        StartCoroutine(PushChaser());
+        //StartCoroutine(PushChaser());
     }
 
     public void Push()
@@ -46,8 +46,8 @@ public class Pusher : MonoBehaviour
 
     private void HideButton()
     {
-        GetComponentInChildren<Button>().interactable = false;
-        rt.DOAnchorPosX(500, 0.4f).Play();
+        //GetComponentInChildren<Button>().interactable = false;
+        //rt.DOAnchorPosX(500, 0.4f).Play();
     }
 
     IEnumerator PushChaser()

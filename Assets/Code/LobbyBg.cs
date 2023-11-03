@@ -15,23 +15,46 @@ public class LobbyBg : MonoBehaviour
         window;
 
     [SerializeField]
+    private AudioClip stone,
+        puffSound;
+
+    [SerializeField]
     private GameObject puffPRef;
 
     [SerializeField]
     private Transform puffOne,
         puffTwo;
 
+    private FingerLobby finger;
+
     void Start()
     {
+        finger = FindAnyObjectByType<FingerLobby>();
         Screen.orientation = ScreenOrientation.Portrait;
         Sequence seq = DOTween.Sequence();
         seq.Append(nightBg.DOColor(new Color(0, 0, 0, 0), 0.5f))
+            .AppendCallback(() =>
+            {
+                if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                {
+                    AudioSource.PlayClipAtPoint(stone, Vector2.zero);
+                }
+            })
             .Append(windowBot.DOAnchorPosY(0, 0.5f))
             .Append(window.DOAnchorPosY(0, 0.5f))
             .AppendCallback(() =>
             {
                 Instantiate(puffPRef, puffOne.position, new Quaternion());
                 Instantiate(puffPRef, puffTwo.position, new Quaternion());
+                if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                {
+                    AudioSource.PlayClipAtPoint(puffSound, Vector2.zero);
+                }
+            })
+            .AppendInterval(1f)
+            .AppendCallback(() =>
+            {
+                finger.ShowHorseBet();
             });
         seq.Restart();
     }

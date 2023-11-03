@@ -39,10 +39,22 @@ public class HorseRandomiser : MonoBehaviour
     private Button[] buttons;
     private int playerBalance;
 
+    [SerializeField]
+    private AudioClip error,
+        betSound,
+        chooseSound;
+
+    private FingerLobby finger;
+
     private bool chosed;
 
     private void Awake()
     {
+        if (PlayerPrefs.GetInt("Music", 1) == 1)
+        {
+            GetComponent<AudioSource>().Play();
+        }
+        finger = FindAnyObjectByType<FingerLobby>();
         int[] riders = new int[] { 0, 1, 2, 3, 4, 5 };
         riders.Shuffle();
         int[] ridersForRace = new int[4];
@@ -74,13 +86,25 @@ public class HorseRandomiser : MonoBehaviour
     {
         if (bet > 0)
         {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(chooseSound, Vector2.zero);
+            }
+            finger.ShowOdds();
             chosed = true;
             PlayerPrefs.SetInt("PlayerBetHorse", buttonChoose[id]);
             PlayerPrefs.Save();
-            oddsText.text = StaticData.odds[buttonChoose[id]].ToString();
+            oddsText.text = "1-" + StaticData.odds[buttonChoose[id]].ToString();
             float odds = StaticData.odds[buttonChoose[id]];
             PlayerPrefs.SetInt("PlayerPrize", Mathf.RoundToInt(odds * bet));
             RebuildButtons(id);
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(error, Vector2.zero);
+            }
         }
     }
 
@@ -101,6 +125,12 @@ public class HorseRandomiser : MonoBehaviour
 
     public void Upbet()
     {
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            AudioSource.PlayClipAtPoint(betSound, Vector2.zero);
+        }
+
+        finger.Hide();
         bet += 100;
         if (bet > playerBalance)
         {
@@ -111,6 +141,10 @@ public class HorseRandomiser : MonoBehaviour
 
     public void DownBet()
     {
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            AudioSource.PlayClipAtPoint(betSound, Vector2.zero);
+        }
         bet -= 100;
         if (bet < 0)
         {
@@ -127,6 +161,13 @@ public class HorseRandomiser : MonoBehaviour
             PlayerPrefs.SetInt("PlayerBalance", playerBalance - bet);
             PlayerPrefs.Save();
             bg.StartGame();
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(error, Vector2.zero);
+            }
         }
     }
 }
